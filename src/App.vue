@@ -1,30 +1,62 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+  <section>
+    <nav>
+      <p>{{ $route.fullPath }}</p>
+      <RouterLink to="/" class="link" activeClass="active">Main</RouterLink>
+      <RouterLink to="/connection" class="link" activeClass="active">
+        Connection
+      </RouterLink>
+      <RouterLink to="/manage" class="link" activeClass="active">
+        Manage
+      </RouterLink>
+    </nav>
+    <main>
+      <header>common information</header>
+
+      <section id="router">
+        <RouterView />
+      </section>
+    </main>
+  </section>
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+<style scoped lang="scss">
+section {
+  display: grid;
+  grid-template-columns: 1fr 9fr;
+  gap: 4px;
+  grid-auto-rows: minmax(100vh, auto);
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+
+nav {
+  background: #eee;
+  .link {
+    display: block;
+    text-decoration: none;
+    color: #333;
+    &.active {
+      color: purple;
+    }
+  }
+  p {
+    font-weight: bold;
+  }
 }
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+
+main {
+  padding: 8px;
+  margin: 8px;
+}
+
+header {
+  background: #eee;
+  padding: 8px;
+  min-height: 20px;
+}
+
+#router {
+  padding: 8px;
 }
 </style>
