@@ -3,13 +3,16 @@
 <template>
   <section>
     <nav>
-      <p>{{ $route.fullPath }}</p>
-      <RouterLink to="/" class="link" activeClass="active">Main</RouterLink>
+      <p class="link">{{ $route.fullPath }}</p>
+      <RouterLink to="/" class="link" activeClass="active"> Main </RouterLink>
       <RouterLink to="/connection" class="link" activeClass="active">
         Connection
       </RouterLink>
       <RouterLink to="/manage" class="link" activeClass="active">
         Manage
+      </RouterLink>
+      <RouterLink to="/monitoring" class="link" activeClass="active">
+        Monitoring
       </RouterLink>
     </nav>
     <main>
@@ -32,15 +35,17 @@ section {
 
 nav {
   background: #eee;
+  padding: 16px;
   .link {
     display: block;
     text-decoration: none;
     color: #333;
+    margin-bottom: 8px;
     &.active {
       color: purple;
     }
   }
-  p {
+  p.link {
     font-weight: bold;
   }
 }
