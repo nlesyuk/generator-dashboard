@@ -1,17 +1,10 @@
 <script setup lang="ts">
-import { RepositoryFactory } from "@/repositories";
-import { ref } from "vue";
-
-const wifiRepo = RepositoryFactory.get("wifi");
-
-console.log(wifiRepo);
+import WifiConnection from "@/components/WifiConnection.vue";
 </script>
 
 <template>
   <section>
-    <div>1</div>
-    <div>2</div>
-    <div>3</div>
+    <WifiConnection />
   </section>
 </template>
 

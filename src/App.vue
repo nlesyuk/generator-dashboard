@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <section>
+  <section id="wrapper">
     <nav>
       <p class="link">{{ $route.fullPath }}</p>
       <RouterLink to="/" class="link" activeClass="active"> Main </RouterLink>
@@ -26,7 +26,7 @@
 </template>
 
 <style scoped lang="scss">
-section {
+#wrapper {
   display: grid;
   grid-template-columns: 1fr 9fr;
   gap: 4px;
