@@ -10,8 +10,8 @@ const wifi = {
   getScannedList() {
     return Repository.get(`${resources}/scan`);
   },
-  getDetails(payload = {}) {
-    return Repository.post(`${resources}/details`, payload);
+  getDetails() {
+    return Repository.get(`${resources}/details`);
   },
   setWifi(payload: ISetWifi) {
     return Repository.post(`${resources}/set`, payload);

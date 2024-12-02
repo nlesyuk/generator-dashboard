@@ -2,6 +2,7 @@
 import { ref, onMounted } from "vue";
 import { RepositoryFactory } from "@/repositories";
 import { ISetWifi } from "@/repositories/WifiRepository";
+import Loader from '@/components/core/Loader.vue';
 
 const WifiRepository = RepositoryFactory.get("wifi");
 
@@ -10,21 +11,15 @@ const wifiEndpoint = ref(undefined);
 const list = ref([]);
 const isLoading = ref<boolean>(false);
 
-function onSubmit() {
-  console.log("submit", wifiEndpoint.value, password.value);
 
-  setWifi({
-    ssid: wifiEndpoint.value,
-    password: password.value
-  })
-}
 
 
 onMounted(async () => {
   try {
     isLoading.value = true
-    const res = await getWifi();
-    list.value = res;
+    const wifiList = await getWifi();
+    list.value = wifiList;
+    wifiEndpoint.value = wifiList[0].ssid;
   } catch(error) {
     console.log(error)
   } finally {
@@ -32,28 +27,37 @@ onMounted(async () => {
   }
 });
 
-
+function onSubmit() {
+  console.log("submit", wifiEndpoint.value, password.value);
+  setWifi({
+    ssid: wifiEndpoint.value,
+    password: password.value
+  })
+}
 async function getWifi() {
   try {
     const { data } = await WifiRepository.getScannedList();
+    return data?.result;
+  } catch (e) {
+    console.error(e);
+  }
+}
+async function setWifi({ ssid, password }: ISetWifi) {
+  try {
+    isLoading.value = true
+    const { data } = await WifiRepository.setWifi({ ssid, password });
     return data;
   } catch (e) {
     console.error(e);
+  } finally {
+    isLoading.value = false
   }
 }
 
-async function setWifi({ ssid, password }: ISetWifi) {
-  try {
-    const { data } = await WifiRepository.setWifi({ ssid, password });
-    console.log(1, data)
-    return data;
-  } catch (e) {
-    console.error(e);
-  }
-}
 </script>
 <template>
   <form>
+    <Loader  v-if="isLoading"/>
     <select v-model="wifiEndpoint">
       <option v-for="item in list" :key="item.ssid" :value="item.ssid">
         {{ item.ssid }}
