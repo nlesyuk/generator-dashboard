@@ -1,16 +1,12 @@
 const express = require('express');
-const cors = require('cors');
-const app = express();
 const router = express.Router();
 
 const delay = (ms = 1000) => new Promise((res) => {
   setTimeout(res, ms);
 });
 
-app.use(cors())
+const wifi = '/wifi';
 
-// routes
-const wifi = '/wifi'
 router.get(`${wifi}/scan`, async (req, res) => {
   await delay()
   res.status(200).send(
@@ -85,23 +81,5 @@ router.post(`${wifi}/set`, async (req, res) => {
     });
 });
 
-router.get('test', (req, res) => {
-  res.status(200).send({ test: 1 })
-});
 
-// routes registration
-app.use('/api/v1', router);
-
-// routes error handler
-app.use((req, res) => {
-  res.status(404).send({ message: 'Not Found', reqUrl: req.url });
-});
-
-
-
-
-
-// start server
-const port = 4000
-const server = app.listen(port);
-server.setTimeout(5000);
+module.exports = router;
