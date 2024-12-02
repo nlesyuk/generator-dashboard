@@ -1,18 +1,17 @@
-const path = require('path');
 const express = require('express');
-const cors = require('cors')
+const cors = require('cors');
 const app = express();
-const Router = require('express');
-const router = new Router();
+const router = express.Router();
 
-const delay = (ms = 1000) => new Promise((res, rej) => {
-  setTimeout(res, ms)
-})
+const delay = (ms = 1000) => new Promise((res) => {
+  setTimeout(res, ms);
+});
 
 app.use(cors())
+
 // routes
 const wifi = '/wifi'
-router.get(wifi, async (req, res) => {
+router.get(`${wifi}/scan`, async (req, res) => {
   await delay()
   res.status(200).send(
     {
@@ -30,49 +29,53 @@ router.get(wifi, async (req, res) => {
           "channel": 11,
           "encryption": "wpa2"
         },
-        {
-          ssid: "Sotona",
-          "rssi": -64,
-          "channel": 1,
-          "encryption": "wpa2"
-        },
-        {
-          ssid: "Numazmat",
-          "rssi": -72,
-          "channel": 11,
-          "encryption": "wpa2"
-        },
-        {
-          ssid: "Number_black",
-          "rssi": -74,
-          "channel": 8,
-          "encryption": "wpa2"
-        },
-        {
-          ssid: "Lanet58",
-          "rssi": -76,
-          "channel": 3,
-          "encryption": "wpa2"
-        },
-        {
-          ssid: "netis_4A88F7",
-          "rssi": -79,
-          "channel": 6,
-          "encryption": "wpa2"
-        },
-        {
-          ssid: "Luigi",
-          "rssi": -80,
-          "channel": 6,
-          "encryption": "wpa2"
-        },
-        {
-          ssid: "TP-LINK_8BEA",
-          "rssi": -83,
-          "channel": 3,
-          "encryption": "wpa2"
-        },
       ]
+    });
+});
+
+router.get(`${wifi}/details`, async (req, res) => {
+  await delay()
+  res.status(200).send(
+    {
+      status: "done",
+      result: {
+        "stored_ssid": "Programming",
+        "stored_password": "Panda1234",
+        "current_ssid": "Programming",
+        "ip_address": "192.168.0.136",
+        "mac_address": "DC:DA:0C:2A:16:40",
+        "rssi": -36,
+        "wifi_status": "Connected",
+        "ap_ssid": "ESP32-AP",
+        "ap_password": "password1234",
+        "ap_ip_address": "192.168.4.1",
+        "ap_mac_address": "DE:DA:0C:2A:16:40",
+        "ap_active": false,
+        "domain_name": "eg.local"
+      }
+    });
+});
+
+router.post(`${wifi}/set`, async (req, res) => {
+  await delay()
+  res.status(200).send(
+    {
+      status: "done",
+      result: {
+        "stored_ssid": "Programming",
+        "stored_password": "Panda1234",
+        "current_ssid": "Programming",
+        "ip_address": "192.168.0.136",
+        "mac_address": "DC:DA:0C:2A:16:40",
+        "rssi": -36,
+        "wifi_status": "Connected",
+        "ap_ssid": "ESP32-AP",
+        "ap_password": "password1234",
+        "ap_ip_address": "192.168.4.1",
+        "ap_mac_address": "DE:DA:0C:2A:16:40",
+        "ap_active": false,
+        "domain_name": "eg.local"
+      }
     });
 });
 
@@ -82,6 +85,7 @@ router.get('test', (req, res) => {
 
 // routes registration
 app.use('/api/v1', router);
+
 // routes error handler
 app.use((req, res) => {
   console.log('req', req.url)
@@ -96,5 +100,3 @@ app.use((req, res) => {
 const port = 4000
 const server = app.listen(port);
 server.setTimeout(5000);
-
-console.log(`Server listening on PORT http://localhost:${port}/api/v1`)
