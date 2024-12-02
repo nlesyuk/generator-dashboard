@@ -8,7 +8,12 @@ const WifiRepository = RepositoryFactory.get("wifi");
 
 const password = ref("");
 const wifiEndpoint = ref(undefined);
-const list = ref([]);
+
+interface WifiItem {
+  ssid: string;
+}
+
+const list = ref<WifiItem[]>([]);
 const isLoading = ref<boolean>(false);
 
 
@@ -58,6 +63,7 @@ async function setWifi({ ssid, password }: ISetWifi) {
 <template>
   <form>
     <Loader  v-if="isLoading"/>
+    <h2>Wifi Connection</h2>
     <select v-model="wifiEndpoint">
       <option v-for="item in list" :key="item.ssid" :value="item.ssid">
         {{ item.ssid }}
@@ -70,10 +76,15 @@ async function setWifi({ ssid, password }: ISetWifi) {
 
 <style scoped lang="scss">
 form {
-  width: 400px;
+  width: 100%;
+  height: 100%;
   padding: 16px;
-  border-radius: 16px;
+  border-radius: 1rem;
   background: grey;
+  h2 {
+    color: white;
+    margin-bottom: 16px;
+  }
   select,
   input,
   button {

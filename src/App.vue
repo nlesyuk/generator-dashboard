@@ -26,6 +26,13 @@
 </template>
 
 <style scoped lang="scss">
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
 #wrapper {
   display: grid;
   grid-template-columns: 1fr 9fr;

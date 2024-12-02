@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import WifiConnection from "@/components/WifiConnection.vue";
+import WifiInfo from "@/components/WifiInfo.vue";
 </script>
 
 <template>
   <section>
     <WifiConnection />
+    <WifiInfo />
   </section>
 </template>
 
@@ -18,5 +20,7 @@ h1 {
 
 section {
   display: flex;
+  justify-content: space-between; 
+  gap: 1rem;
 }
 </style>
