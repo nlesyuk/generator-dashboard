@@ -7,6 +7,7 @@ const WifiRepository = RepositoryFactory.get("wifi");
 const password = ref("");
 const wifiEndpoint = ref(undefined);
 const list = ref([]);
+const isLoading = ref<boolean>(false);
 
 function onSubmit() {
   console.log("submit", wifiEndpoint.value, password.value);
@@ -14,7 +15,7 @@ function onSubmit() {
 
 async function getWifi() {
   try {
-    const { data } = await WifiRepository.get();
+    const { data } = await WifiRepository.getScannedList();
     return data;
   } catch (e) {
     console.error(e);
@@ -22,16 +23,21 @@ async function getWifi() {
 }
 
 onMounted(async () => {
-  const res = await getWifi();
-  console.log({ res });
-  wifiEndpoint.value = res[0].ssid;
-  list.value = res;
+  try {
+    isLoading.value = true
+    const res = await getWifi();
+    list.value = res;
+  } catch(error) {
+    console.log(error)
+  } finally {
+    isLoading.value = false
+  }
 });
 </script>
 <template>
   <form>
     <select v-model="wifiEndpoint">
-      <option v-for="item in list" :key="item.id" :value="item.ssid">
+      <option v-for="item in list" :key="item.ssid" :value="item.ssid">
         {{ item.ssid }}
       </option>
     </select>

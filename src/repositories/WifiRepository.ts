@@ -3,11 +3,11 @@ import Repository from "./Repository";
 const resources = "wifi";
 
 const wifi = {
-  get() {
-    return Repository.get(`${resources}`);
+  getScannedList() {
+    return Repository.get(`${resources}/scan`);
   },
-  save(payload = {}) {
-    return Repository.post(`${resources}`, payload);
+  getDetails(payload = {}) {
+    return Repository.post(`${resources}/details`, payload);
   },
 };
 
