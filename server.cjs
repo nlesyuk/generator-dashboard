@@ -57,6 +57,12 @@ router.get(`${wifi}/details`, async (req, res) => {
 });
 
 router.post(`${wifi}/set`, async (req, res) => {
+  // awaiting from a client
+  // {
+  // "ssid": "your_wifi_ssid",
+  // "password": "your_wifi_password"
+  // }
+  // TODO:
   await delay()
   res.status(200).send(
     {
@@ -88,7 +94,6 @@ app.use('/api/v1', router);
 
 // routes error handler
 app.use((req, res) => {
-  console.log('req', req.url)
   res.status(404).send({ message: 'Not Found', reqUrl: req.url });
 });
 
