@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { RepositoryFactory } from "@/repositories";
+import { ISetWifi } from "@/repositories/WifiRepository";
 
 const WifiRepository = RepositoryFactory.get("wifi");
 
@@ -11,16 +12,13 @@ const isLoading = ref<boolean>(false);
 
 function onSubmit() {
   console.log("submit", wifiEndpoint.value, password.value);
+
+  setWifi({
+    ssid: wifiEndpoint.value,
+    password: password.value
+  })
 }
 
-async function getWifi() {
-  try {
-    const { data } = await WifiRepository.getScannedList();
-    return data;
-  } catch (e) {
-    console.error(e);
-  }
-}
 
 onMounted(async () => {
   try {
@@ -33,6 +31,26 @@ onMounted(async () => {
     isLoading.value = false
   }
 });
+
+
+async function getWifi() {
+  try {
+    const { data } = await WifiRepository.getScannedList();
+    return data;
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+async function setWifi({ ssid, password }: ISetWifi) {
+  try {
+    const { data } = await WifiRepository.setWifi({ ssid, password });
+    console.log(1, data)
+    return data;
+  } catch (e) {
+    console.error(e);
+  }
+}
 </script>
 <template>
   <form>
