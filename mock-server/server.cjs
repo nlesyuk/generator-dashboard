@@ -4,7 +4,10 @@ const app = express();
 const router = express.Router();
 const customRoutes = require('./routes/index.cjs');
 const { wifi } = customRoutes
+
 app.use(cors())
+app.use(express.json()); // For JSON requests
+app.use(express.urlencoded({ extended: true })); // For form data
 
 // routes
 const routes = [wifi]
