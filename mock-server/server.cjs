@@ -2,11 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const router = express.Router();
-const routes1 = require('./routes/index.cjs');
-const {
-  wifi
-} = routes1
-console.log(routes1)
+const customRoutes = require('./routes/index.cjs');
+const { wifi } = customRoutes
 app.use(cors())
 
 // routes
